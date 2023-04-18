@@ -137,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
                     v = v.replace('_', ' ')
                     kwargs[k] = v.strip('"\'')
 
-            obj = self.classes[cls_name](**kwargs)
+            obj = self.classes[cls_name](*kwargs)
             storage.new(obj)  # store new object
             obj.save()  # save storage to file
             print(obj.id)  # print id of created object class
