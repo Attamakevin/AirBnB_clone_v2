@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """This module defines a class to manage file storage for hbnb clone"""
 import json
+<<<<<<< HEAD
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -8,6 +9,9 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
+=======
+import re
+>>>>>>> d26c8ad4422b53fba87eeed2f18cf2244a49fd77
 
 
 class FileStorage:
@@ -15,6 +19,14 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
+<<<<<<< HEAD
+    def all(self, cls=None):
+        """Returns a dictionary of models currently in storage"""
+        if cls is None:
+            return FileStorage.__objects
+        return {k: v for k, v in FileStorage.__objects.items(
+        ) if re.match("^{}\\..*".format(cls.__name__), k)}
+=======
     classes = {'BaseModel': BaseModel, 'User': User,
                    'State': State, 'City': City, 'Amenity': Amenity,
                    'Place': Place, 'Review': Review }
@@ -39,6 +51,7 @@ class FileStorage:
             all_return = self.__objects
 
         return all_return
+>>>>>>> b9bac4719f8c40b10aee401a1c7ae6dd816f867e
 
     def new(self, obj):
 
@@ -65,18 +78,64 @@ class FileStorage:
     def reload(self):
         
         """Loads storage dictionary from file"""
+<<<<<<< HEAD
 
         from models.engine.file_storage import FileStorage
+=======
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.place import Place
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.review import Review
+
+        classes = {
+            'BaseModel': BaseModel, 'User': User, 'Place': Place,
+            'State': State, 'City': City, 'Amenity': Amenity,
+            'Review': Review
+        }
+>>>>>>> d26c8ad4422b53fba87eeed2f18cf2244a49fd77
         try:
             temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
+<<<<<<< HEAD
                         self.all()[key] =  classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
     def close(self):
 
+=======
+                    self.all()[key] = classes[val['__class__']](**val)
+        except FileNotFoundError:
+            pass
+<<<<<<< HEAD
+
+    def delete(self, obj=None):
+        """
+        delete removes the instance obj is not None from the private class
+        attribute __objects
+
+        :param obj: is the object to be removed
+        """
+        if obj is None:
+            return
+        id = "{}.{}".format(obj.__class__.__name__, obj.id)
+        del FileStorage.__objects[id]
+        self.save()
+
+    def close(self):
+        """TODO: Docstring for close.
+
+        :returns: TODO
+
+        """
+        self.reload()
+=======
+        def close(self):
+>>>>>>> d26c8ad4422b53fba87eeed2f18cf2244a49fd77
         """Reload JSON objects
         """
 
@@ -91,3 +150,4 @@ class FileStorage:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             del self.__objects[key]
 
+>>>>>>> b9bac4719f8c40b10aee401a1c7ae6dd816f867e

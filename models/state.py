@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel, Base
+<<<<<<< HEAD
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import environ
@@ -35,3 +36,27 @@ class State(BaseModel, Base):
                     citiesList.append(city)
 
             return citiesList
+=======
+from sqlalchemy import String, Column, Integer
+from sqlalchemy.orm import relationship
+from models import storage
+import os
+from models.city import City
+
+
+class State(BaseModel, Base):
+    """ State class """
+    __tablename__ = "states"
+    name = Column('name', String(128), nullable=False)
+    cities = relationship('City', back_populates="state")
+
+    if os.getenv("HBNB_TYPE_STORAGE") != "db":
+        @property
+        def cities(self):
+            return [city for city in storage.all(City).values()
+                    if city.state_id == self.id]
+
+
+if os.getenv("HBNB_TYPE_STORAGE") == "db":
+    City.state = relationship('State', back_populates="cities")
+>>>>>>> d26c8ad4422b53fba87eeed2f18cf2244a49fd77
