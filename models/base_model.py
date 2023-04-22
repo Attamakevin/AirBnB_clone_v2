@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-"""This module defines a base class for all models in our hbnb clone"""
-
+"""This is the base model class for AirBnB"""
 import uuid
 import models
 from datetime import datetime
@@ -86,4 +85,4 @@ class BaseModel:
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
 
-        return 
+        return my_dict

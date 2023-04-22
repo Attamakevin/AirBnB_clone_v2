@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This module instantiates an object of class storage for the application"""
+"""Create a unique storage instance for your application"""
 
 from os import environ
 from models.base_model import BaseModel

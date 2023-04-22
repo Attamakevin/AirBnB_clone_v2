@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
+"""This is the file storage class for AirBnB"""
 import json
 from models.base_model import BaseModel
 from models.user import User
@@ -19,7 +19,7 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
-    classes = {'BaseModel': BaseModel, 'User': User,
+    all_classes = {'BaseModel': BaseModel, 'User': User,
                    'State': State, 'City': City, 'Amenity': Amenity,
                    'Place': Place, 'Review': Review}
 
@@ -32,7 +32,7 @@ class FileStorage:
 
         # if cls is valid
         if cls:
-            if cls.__name__ in self.classes:
+            if cls.__name__ in self.all_classes:
                 # copy objects of cls to temp dict
                 for key, val in self.__objects.items():
                     if key.split('.')[0] == cls.__name__:
@@ -54,11 +54,11 @@ class FileStorage:
     def save(self):
         """serialize the file path to JSON file path
         """
-        myDict = {}
+        my_dict = {}
         for key, value in self.__objects.items():
-            myDict[key] = value.to_dict()
+            my_dict[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding="UTF-8") as f:
-            json.dump(myDict, f)
+            json.dump(my_dict, f)
 
     def reload(self):
         """serialize the file path to JSON file path

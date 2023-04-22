@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This is the  storage engine using MySQL database
+"""Define storage engine using MySQL database
 """
 from models.base_model import BaseModel, Base
 from models.user import User
@@ -13,7 +13,7 @@ from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm.session import sessionmaker, Session
 from os import getenv
 
-classes = {'State': State, 'City': City,
+all_classes = {'State': State, 'City': City,
                'User': User, 'Place': Place,
                'Review': Review, 'Amenity': Amenity}
 
@@ -24,22 +24,20 @@ class DBStorage:
         __engine: engine object
         __session: session object
     """
-"""This module defines a class to handle Database storage"""
     __engine = None
     __session = None
 
     def __init__(self):
-
         """Create SQLAlchemy engine
         """
-        # creating engine
+        # create engine
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}:3306/{}'.
                                       format(getenv('HBNB_MYSQL_USER'),
                                              getenv('HBNB_MYSQL_PWD'),
                                              getenv('HBNB_MYSQL_HOST'),
                                              getenv('HBNB_MYSQL_DB')),
                                       pool_pre_ping=True)
-        # drop tables if test is equal to environment
+        # drop tables if test environment
         if getenv('HBNB_ENV') == 'test':
                 Base.metadata.drop_all(self.__engine)
 
@@ -55,7 +53,7 @@ class DBStorage:
                 obj_dict.update({'{}.{}'.
                                 format(type(cls).__name__, row.id,): row})
         else:
-            for key, val in classes.items():
+            for key, val in all_classes.items():
                 for row in self.__session.query(val):
                     obj_dict.update({'{}.{}'.
                                     format(type(row).__name__, row.id,): row})
@@ -76,7 +74,7 @@ class DBStorage:
         """
         if obj:
             # determine class from obj
-            cls_name = classes[type(obj).__name__]
+            cls_name = all_classes[type(obj).__name__]
 
             # query class table and delete
             self.__session.query(cls_name).\
@@ -90,7 +88,7 @@ class DBStorage:
         # create db tables
         session = sessionmaker(bind=self.__engine,
                                expire_on_commit=False)
-        # from previousy:
+        # previousy:
         # Session = scoped_session(session)
         self.__session = scoped_session(session)
 
@@ -98,3 +96,4 @@ class DBStorage:
         """Close scoped session
         """
         self.__session.remove()
+
