@@ -10,7 +10,6 @@ env.hosts = ['54.162.92.154', '35.168.8.216']
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/school'
 
-
 def do_deploy(archive_path):
         """Deploy web files to server
         """
@@ -53,4 +52,4 @@ web_static_{}/ /data/web_static/current'.format(timestamp))
                 return False
 
         # return True on success
-        return True
+        return Truee
