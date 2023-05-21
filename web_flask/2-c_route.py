@@ -21,7 +21,7 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def show_text(text):
     """return 'c'with some text"""
-    text = text.replace("-", " ")
+    text = text.replace('-', '')
     return ("C {}" .format(text))
 
 
