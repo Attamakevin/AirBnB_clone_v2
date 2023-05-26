@@ -21,7 +21,7 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def show_text(text):
     """return 'c'with some text"""
-    text = text.replace('-', ' ')
+    text = text.replace('_', ' ')
     return ("C {}" .format(text))
 
 
@@ -29,7 +29,7 @@ def show_text(text):
 @app.route("/python/<text>", strict_slashes=False)
 def show_python(text="is cool"):
     """return "python" with some text"""
-    text = text.replace('-', ' ')
+    text = text.replace('_', ' ')
     return ("Python {}".format(text))
 
 
